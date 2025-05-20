@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, Link, Suspense } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
 import { getDetalesMovie } from '../../api/ApiFun';
 import { NavLink, Outlet, useParams, useLocation } from 'react-router-dom';
 import GoBackBtn from '../../components/GoBackBtn/GoBackBtn';

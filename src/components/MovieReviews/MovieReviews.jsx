@@ -19,7 +19,7 @@ export default function MovieReviews() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [movieId]);
   return (
     <>
       {loading ? (

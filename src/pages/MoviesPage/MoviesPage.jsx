@@ -42,7 +42,7 @@ export default function MoviesPage() {
         const response = await searchMovieName(query);
         setMov(response.data);
       } catch (error) {
-        console.error(err);
+        console.error(error);
       } finally {
         setLoading(false);
       }

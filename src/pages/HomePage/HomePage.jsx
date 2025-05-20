@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { searchMovieRamdom } from '../../api/ApiFun';
 import css from './HomePage.module.css';
-import { Link, useLocation } from 'react-router-dom';
+import MovieList from '../../components/MovieList/MovieList';
 
 export default function HomePage() {
   const [moviesData, setMoviesData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     setLoading(true);
@@ -27,22 +26,7 @@ export default function HomePage() {
         <p>Loading movies...</p>
       ) : (
         <ul className={css.list}>
-          {moviesData.map((movie) => (
-            <li key={movie.id} className={css.item}>
-              <Link to={`/movies/${movie.id}`} state={location}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <p>{movie.original_title}</p>
-                <p className={css.average}>
-                  Release:
-                  {movie.release_date}
-                </p>
-                <p className={css.average}>Avarage: {movie.vote_average}</p>
-              </Link>
-            </li>
-          ))}
+          <MovieList moviesData={moviesData} />
         </ul>
       )}
     </>

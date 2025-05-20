@@ -16,7 +16,7 @@ export default function MovieCast() {
         console.error(error);
       })
       .finally();
-  }, []);
+  }, [movieId]);
 
   return (
     <div>
@@ -26,7 +26,7 @@ export default function MovieCast() {
         <ul className={css.list}>
           {casts.map((cast) => {
             return (
-              <li className={css.item}>
+              <li key={cast.id} className={css.item}>
                 <div>
                   <img
                     src={`https://image.tmdb.org/t/p/w200${cast.profile_path}`}
