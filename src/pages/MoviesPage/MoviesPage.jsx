@@ -1,31 +1,21 @@
 import SearchMovie from '../../components/SearchMovie/SearchMovie';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { searchMovieName } from '../../api/ApiFun';
 
 import css from './MoviesPage.module.css';
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import MovieList from '../../components/MovieList/MovieList';
 
 export default function MoviesPage() {
-  const [mov, setMov] = useState([]);
-  // const [query, setQuery] = useState('');
+  const [moviesData, setMoviesData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
-  const locRef = useRef(location.state);
-  const [linkLocation, setLinkLocation] = useState(location.state);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
-  const urlParams = useParams();
 
   const submitForm = (newQuery) => {
-    setMov([]);
+    setMoviesData([]);
     const nextSearchParams = new URLSearchParams(searchParams);
     nextSearchParams.set('query', newQuery);
     setSearchParams(nextSearchParams);
@@ -40,7 +30,7 @@ export default function MoviesPage() {
       try {
         setLoading(true);
         const response = await searchMovieName(query);
-        setMov(response.data);
+        setMoviesData(response.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -50,25 +40,6 @@ export default function MoviesPage() {
 
     fetchData();
   }, [query]);
-
-  const renderMoviesTitle = () => {
-    const render = mov.map((movie) => {
-      return (
-        <li key={movie.id} className={css.item}>
-          <Link to={`/movies/${movie.id}`} state={location}>
-            <p>{movie.title}</p>
-          </Link>
-          <p>
-            {'  Release: '}
-            {movie.release_date ?? ''}
-          </p>
-        </li>
-      );
-    });
-
-    return <ul>{render}</ul>;
-  };
-
   return (
     <>
       {loading ? (
@@ -76,7 +47,11 @@ export default function MoviesPage() {
       ) : (
         <div>
           <SearchMovie onSubmit={submitForm} />
-          {renderMoviesTitle()}
+          {moviesData.length !== 0 && (
+            <ul className={css.list}>
+              <MovieList moviesData={moviesData} />
+            </ul>
+          )}
         </div>
       )}
     </>

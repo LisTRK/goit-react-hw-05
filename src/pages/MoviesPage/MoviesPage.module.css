@@ -1,5 +1,7 @@
-.item {
+.list {
   display: flex;
-  justify-content: space-between;
-  font-size: 18px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 18px;
+  padding-top: 20px;
 }

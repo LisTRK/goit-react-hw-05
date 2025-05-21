@@ -11,7 +11,7 @@ export default function MovieList({ moviesData }) {
               src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
               alt={movie.title}
             />
-            <p>{movie.original_title}</p>
+            <p>{movie.title}</p>
             <p className={css.average}>
               Release:
               {movie.release_date}
